@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppToolbar"
+        app:titleTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridLayout
+        android:id="@+id/grid_layout_activity_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:orientation="horizontal"
+        android:rowCount="3"
+        android:useDefaultMargins="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="@string/title_arraylist"
+            android:textSize="@dimen/default_text_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="@string/title_linkedlist"
+            android:textSize="@dimen/default_text_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="@string/title_copyonwritearraylist"
+            android:textSize="@dimen/default_text_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="@string/title_addmid"
+            android:textSize="@dimen/default_text_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_addmid_arraylist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_addmid_linkedlist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_addmid_copyonwritearraylist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="@string/title_removemid"
+            android:textSize="@dimen/default_text_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_removemid_arraylist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_removemid_linkedlist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_removemid_copyonwritearraylist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="@string/title_search"
+            android:textSize="@dimen/default_text_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_search_arraylist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_search_linkedlist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_search_copyonwritearraylist"
+            android:layout_gravity="center"
+            android:textSize="@dimen/default_text_size"
+            tools:text="1232s" />
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
