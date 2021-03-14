@@ -2,9 +2,11 @@
     <string name="app_name">MultithreadingTestApp</string>
     <string name="title_arraylist">ArrayList</string>
     <string name="title_linkedlist">LinkedList</string>
-    <string name="title_copyonwritearraylist">CopyOnWrite\nArraylist</string>
+    <string name="title_copyonwritearraylist">CopyOn\nWrite\nArraylist</string>
     <string name="title_addmid">AddMid</string>
     <string name="title_removemid">RemoveMid</string>
     <string name="title_search">Search</string>
     <string name="title_action_start">Start</string>
+    <string name="title_copyonwritearraylist_land">CopyOnWriteArrayList</string>
+    <string name="result_value">%dms</string>
 </resources>

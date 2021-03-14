@@ -4,7 +4,13 @@ public interface MainContract {
 
     interface View {
 
-        void setResult(@MainPresenter.ResultType int resultType, String value);
+        void setResult(@MainPresenter.ResultType int resultType, long value);
+
+        void showProgress();
+
+        void hideProgress();
+
+        void clearValues();
     }
 
     interface Presenter {
@@ -13,13 +19,12 @@ public interface MainContract {
 
         void onStartButtonPressed();
 
-        void computingResult(@MainPresenter.ResultType int result, double value);
+        void onComputingResult(@MainPresenter.ResultType int resultType, long value);
     }
 
     interface Model {
 
         void startComputing();
 
-        void dropPresenter();
     }
 }

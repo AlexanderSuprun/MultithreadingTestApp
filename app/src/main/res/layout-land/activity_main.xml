@@ -17,23 +17,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/white" />
 
-    <ProgressBar
-        android:id="@+id/progress_circular_activity_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/progress_bar_height"
-        android:minWidth="@dimen/progress_bar_width"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/grid_layout_activity_main"/>
-
     <GridLayout
         android:id="@+id/grid_layout_activity_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_margin="@dimen/default_middle_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,27 +37,25 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_gravity="fill"
             android:background="@color/background"
-            android:gravity="center"
             android:padding="@dimen/default_padding"
             android:text="@string/title_arraylist"
             android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:layout_column="2"
             android:background="@color/background"
-            android:gravity="center"
             android:padding="@dimen/default_padding"
             android:text="@string/title_linkedlist"
             android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_gravity="center"
+            android:layout_row="0"
+            android:layout_column="3"
             android:background="@color/background"
-            android:gravity="fill"
             android:padding="@dimen/default_padding"
-            android:text="@string/title_copyonwritearraylist"
+            android:text="@string/title_copyonwritearraylist_land"
             android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -86,19 +72,19 @@
             android:id="@+id/text_view_addmid_arraylist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_view_addmid_linkedlist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_view_addmid_copyonwritearraylist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_row="2"
@@ -114,19 +100,19 @@
             android:id="@+id/text_view_removemid_arraylist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_view_removemid_linkedlist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_view_removemid_copyonwritearraylist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_row="3"
@@ -142,18 +128,18 @@
             android:id="@+id/text_view_search_arraylist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_view_search_linkedlist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_view_search_copyonwritearraylist"
             android:layout_gravity="center"
             android:textSize="@dimen/default_text_size"
-            tools:text="123ms" />
+            tools:text="1232s" />
     </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

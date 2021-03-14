@@ -1,51 +1,95 @@
 package com.example.multithreadingtestapp.screen.main;
 
-import android.util.Log;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.Executors;
+
+import static com.example.multithreadingtestapp.screen.main.MainPresenter.*;
+import static com.example.multithreadingtestapp.screen.main.MainPresenter.ResultType;
 
 public class MainRepository implements MainContract.Model {
 
-    private MainContract.Presenter presenter;
+    private final int listSize = 5000000;
+    private final int listMidIndex = 2500000;
+    private final int numberToAdd = 1;
+    private final List<Integer> arrayListAdd = new ArrayList<>(Collections.nCopies(listSize, 0));
+    private final List<Integer> linkedListAdd = new LinkedList<>(Collections.nCopies(listSize, 0));
+    private final CopyOnWriteArrayList<Integer> copyOnWriteArrayListAdd = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
+    private final List<Integer> arrayListRemove = new ArrayList<>(Collections.nCopies(listSize, 0));
+    private final List<Integer> linkedListRemove = new LinkedList<>(Collections.nCopies(listSize, 0));
+    private final CopyOnWriteArrayList<Integer> copyOnWriteArrayListRemove = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
+    private final List<Integer> arrayListSearch = new ArrayList<>(Collections.nCopies(listSize, 0));
+    private final List<Integer> linkedListSearch = new LinkedList<>(Collections.nCopies(listSize, 0));
+    private final CopyOnWriteArrayList<Integer> copyOnWriteArrayListSearch = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
+    private final MainContract.Presenter presenter;
     private ExecutorService executor;
-    private int listSize = 1000000;
 
-    public MainRepository(MainContract.Presenter presenter, ExecutorService executor) {
+    // Adding element to search later
+    {
+        arrayListSearch.add(listMidIndex, numberToAdd);
+        linkedListSearch.add(listMidIndex, numberToAdd);
+        copyOnWriteArrayListSearch.add(listMidIndex, numberToAdd);
+    }
+
+    public MainRepository(MainContract.Presenter presenter) {
         this.presenter = presenter;
-        this.executor = executor;
     }
 
     @Override
     public void startComputing() {
-        ArrayList<Integer> arrayList = new ArrayList<>(listSize);
-        LinkedList<Integer> linkedList = new LinkedList<>();
-        CopyOnWriteArrayList<Integer> copyOnWriteArrayList = new CopyOnWriteArrayList<>();
+        executor = Executors.newFixedThreadPool(9);
 
-//        executor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                for (int i = 0; i < listSize; i++) {
-//                    arrayList.add(ThreadLocalRandom.current().nextInt(0, 1001));
-//                    linkedList.add(ThreadLocalRandom.current().nextInt(0, 1001));
-//                    copyOnWriteArrayList.add(ThreadLocalRandom.current().nextInt(0, 1001));
-//                }
-//                Log.d("TAG_THREAD", Thread.currentThread().getName());
-//                Log.d("TAG_ALIST_SIZE", "" + arrayList.size());
-//                Log.d("TAG_LLIST_SIZE", "" + linkedList.size());
-//                Log.d("TAG_COWALIST_SIZE", "" + copyOnWriteArrayList.size());
-//            }
-//        });
+        addMid(ADD_MID_ARRAYLIST, arrayListAdd);
+        addMid(ADD_MID_LINKEDLIST, linkedListAdd);
+        addMid(ADD_MID_COPYONWRITEARRAYLIST, copyOnWriteArrayListAdd);
+        search(SEARCH_ARRAYLIST, arrayListSearch);
+        search(SEARCH_LINKEDLIST, linkedListSearch);
+        search(SEARCH_COPYONWRITEARRAYLIST, copyOnWriteArrayListSearch);
+        removeMid(REMOVE_MID_ARRAYLIST, arrayListRemove);
+        removeMid(REMOVE_MID_LINKEDLIST, linkedListRemove);
+        removeMid(REMOVE_MID_COPYONWRITEARRAYLIST, copyOnWriteArrayListRemove);
 
-//        presenter.computingResult();
         executor.shutdown();
     }
 
-    @Override
-    public void dropPresenter() {
-        presenter = null;
+    private void addMid(@ResultType int resultType, List<Integer> list) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                long timeStart = new Date().getTime();
+                list.add(listMidIndex, numberToAdd);
+                presenter.onComputingResult(resultType, new Date().getTime() - timeStart);
+            }
+        });
+    }
+
+    private void removeMid(@ResultType int resultType, List<Integer> list) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                long timeStart = new Date().getTime();
+                list.remove(listMidIndex);
+                presenter.onComputingResult(resultType, new Date().getTime() - timeStart);
+            }
+        });
+    }
+
+    private void search(@ResultType int resultType, List<Integer> list) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                long timeStart = new Date().getTime();
+                if (list.contains(numberToAdd)) {
+                    presenter.onComputingResult(resultType, new Date().getTime() - timeStart);
+                } else {
+                    presenter.onComputingResult(resultType, -1);
+                }
+            }
+        });
     }
 }
