@@ -20,9 +20,13 @@ public interface MainContract {
         void onStartButtonPressed();
 
         void onComputingResult(@MainPresenter.ResultType int resultType, long value);
+
+        void onListsInitComplete();
     }
 
     interface Model {
+
+        void initLists();
 
         void startComputing();
 

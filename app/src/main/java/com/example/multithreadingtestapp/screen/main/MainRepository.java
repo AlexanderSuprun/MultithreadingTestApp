@@ -17,42 +17,57 @@ public class MainRepository implements MainContract.Model {
     private final int listSize = 5000000;
     private final int listMidIndex = 2500000;
     private final int numberToAdd = 1;
-    private final List<Integer> arrayListAdd = new ArrayList<>(Collections.nCopies(listSize, 0));
-    private final List<Integer> linkedListAdd = new LinkedList<>(Collections.nCopies(listSize, 0));
-    private final CopyOnWriteArrayList<Integer> copyOnWriteArrayListAdd = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
-    private final List<Integer> arrayListRemove = new ArrayList<>(Collections.nCopies(listSize, 0));
-    private final List<Integer> linkedListRemove = new LinkedList<>(Collections.nCopies(listSize, 0));
-    private final CopyOnWriteArrayList<Integer> copyOnWriteArrayListRemove = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
-    private final List<Integer> arrayListSearch = new ArrayList<>(Collections.nCopies(listSize, 0));
-    private final List<Integer> linkedListSearch = new LinkedList<>(Collections.nCopies(listSize, 0));
-    private final CopyOnWriteArrayList<Integer> copyOnWriteArrayListSearch = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
+    private List<Integer> arrayListAdd;
+    private List<Integer> arrayListRemove;
+    private List<Integer> arrayListSearch;
+    private List<Integer> linkedListAdd;
+    private List<Integer> linkedListRemove;
+    private List<Integer> linkedListSearch;
+    private CopyOnWriteArrayList<Integer> copyOnWriteArrayListAdd;
+    private CopyOnWriteArrayList<Integer> copyOnWriteArrayListRemove;
+    private CopyOnWriteArrayList<Integer> copyOnWriteArrayListSearch;
     private final MainContract.Presenter presenter;
     private ExecutorService executor;
-
-    // Adding element to search later
-    {
-        arrayListSearch.add(listMidIndex, numberToAdd);
-        linkedListSearch.add(listMidIndex, numberToAdd);
-        copyOnWriteArrayListSearch.add(listMidIndex, numberToAdd);
-    }
 
     public MainRepository(MainContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
+    // Initiates lists and adds an item to search later
+    @Override
+    public void initLists() {
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                arrayListAdd = new ArrayList<>(Collections.nCopies(listSize, 0));
+                linkedListAdd = new LinkedList<>(Collections.nCopies(listSize, 0));
+                copyOnWriteArrayListAdd = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
+                arrayListRemove = new ArrayList<>(Collections.nCopies(listSize, 0));
+                linkedListRemove = new LinkedList<>(Collections.nCopies(listSize, 0));
+                copyOnWriteArrayListRemove = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
+                arrayListSearch = new ArrayList<>(Collections.nCopies(listSize, 0));
+                linkedListSearch = new LinkedList<>(Collections.nCopies(listSize, 0));
+                copyOnWriteArrayListSearch = new CopyOnWriteArrayList<>(Collections.nCopies(listSize, 0));
+                arrayListSearch.add(listMidIndex, numberToAdd);
+                linkedListSearch.add(listMidIndex, numberToAdd);
+                copyOnWriteArrayListSearch.add(listMidIndex, numberToAdd);
+                presenter.onListsInitComplete();
+            }
+        });
+    }
+
     @Override
     public void startComputing() {
         executor = Executors.newFixedThreadPool(9);
-
         addMid(ADD_MID_ARRAYLIST, arrayListAdd);
         addMid(ADD_MID_LINKEDLIST, linkedListAdd);
         addMid(ADD_MID_COPYONWRITEARRAYLIST, copyOnWriteArrayListAdd);
-        search(SEARCH_ARRAYLIST, arrayListSearch);
-        search(SEARCH_LINKEDLIST, linkedListSearch);
-        search(SEARCH_COPYONWRITEARRAYLIST, copyOnWriteArrayListSearch);
         removeMid(REMOVE_MID_ARRAYLIST, arrayListRemove);
         removeMid(REMOVE_MID_LINKEDLIST, linkedListRemove);
         removeMid(REMOVE_MID_COPYONWRITEARRAYLIST, copyOnWriteArrayListRemove);
+        search(SEARCH_ARRAYLIST, arrayListSearch);
+        search(SEARCH_LINKEDLIST, linkedListSearch);
+        search(SEARCH_COPYONWRITEARRAYLIST, copyOnWriteArrayListSearch);
 
         executor.shutdown();
     }

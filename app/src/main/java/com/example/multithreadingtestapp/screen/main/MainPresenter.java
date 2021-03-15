@@ -27,6 +27,18 @@ public class MainPresenter implements MainContract.Presenter {
     public MainPresenter(MainContract.View view) {
         this.view = view;
         this.repository = new MainRepository(this);
+        repository.initLists();
+        view.showProgress();
+    }
+
+    @Override
+    public void onListsInitComplete() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                view.hideProgress();
+            }
+        });
     }
 
     @Override
