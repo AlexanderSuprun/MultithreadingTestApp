@@ -2,10 +2,10 @@ package com.example.multithreadingtestapp.screen.main;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,6 +17,7 @@ public class MainRepository implements MainContract.Model {
     private final int listSize = 5000000;
     private final int listMidIndex = 2500000;
     private final int numberToAdd = 1;
+    private final MainContract.Presenter presenter;
     private List<Integer> arrayListAdd;
     private List<Integer> arrayListRemove;
     private List<Integer> arrayListSearch;
@@ -26,17 +27,20 @@ public class MainRepository implements MainContract.Model {
     private CopyOnWriteArrayList<Integer> copyOnWriteArrayListAdd;
     private CopyOnWriteArrayList<Integer> copyOnWriteArrayListRemove;
     private CopyOnWriteArrayList<Integer> copyOnWriteArrayListSearch;
-    private final MainContract.Presenter presenter;
     private ExecutorService executor;
+    private CountDownLatch latch;
 
     public MainRepository(MainContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
-    // Initiates lists and adds an item to search later
     @Override
-    public void initLists() {
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
+    public void startComputing() {
+        executor = Executors.newFixedThreadPool(9);
+        latch = new CountDownLatch(1);
+
+        // Initiates lists and adds an item to search later
+        executor.execute(new Runnable() {
             @Override
             public void run() {
                 arrayListAdd = new ArrayList<>(Collections.nCopies(listSize, 0));
@@ -51,14 +55,16 @@ public class MainRepository implements MainContract.Model {
                 arrayListSearch.add(listMidIndex, numberToAdd);
                 linkedListSearch.add(listMidIndex, numberToAdd);
                 copyOnWriteArrayListSearch.add(listMidIndex, numberToAdd);
-                presenter.onListsInitComplete();
+                latch.countDown();
             }
         });
-    }
 
-    @Override
-    public void startComputing() {
-        executor = Executors.newFixedThreadPool(9);
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         addMid(ADD_MID_ARRAYLIST, arrayListAdd);
         addMid(ADD_MID_LINKEDLIST, linkedListAdd);
         addMid(ADD_MID_COPYONWRITEARRAYLIST, copyOnWriteArrayListAdd);
@@ -76,9 +82,9 @@ public class MainRepository implements MainContract.Model {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                long timeStart = new Date().getTime();
+                long timeStart = System.currentTimeMillis();
                 list.add(listMidIndex, numberToAdd);
-                presenter.onComputingResult(resultType, new Date().getTime() - timeStart);
+                presenter.onComputingResult(resultType, System.currentTimeMillis() - timeStart);
             }
         });
     }
@@ -87,9 +93,9 @@ public class MainRepository implements MainContract.Model {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                long timeStart = new Date().getTime();
+                long timeStart = System.currentTimeMillis();
                 list.remove(listMidIndex);
-                presenter.onComputingResult(resultType, new Date().getTime() - timeStart);
+                presenter.onComputingResult(resultType, System.currentTimeMillis() - timeStart);
             }
         });
     }
@@ -98,13 +104,26 @@ public class MainRepository implements MainContract.Model {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                long timeStart = new Date().getTime();
+                long timeStart = System.currentTimeMillis();
                 if (list.contains(numberToAdd)) {
-                    presenter.onComputingResult(resultType, new Date().getTime() - timeStart);
+                    presenter.onComputingResult(resultType, System.currentTimeMillis() - timeStart);
                 } else {
                     presenter.onComputingResult(resultType, -1);
                 }
             }
         });
+    }
+
+    @Override
+    public void clearLists() {
+        arrayListAdd = null;
+        arrayListRemove = null;
+        arrayListSearch = null;
+        linkedListAdd = null;
+        linkedListRemove = null;
+        linkedListSearch = null;
+        copyOnWriteArrayListAdd = null;
+        copyOnWriteArrayListRemove = null;
+        copyOnWriteArrayListSearch = null;
     }
 }

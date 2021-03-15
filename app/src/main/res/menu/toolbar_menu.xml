@@ -5,7 +5,6 @@
         android:id="@+id/action_start"
         android:icon="@drawable/ic_play_arrow_white_18dp"
         android:title="@string/title_action_start"
-        android:visible="false"
         app:showAsAction="ifRoom" />
 
 </menu>

@@ -13,16 +13,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.multithreadingtestapp.R;
 
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.ADD_MID_ARRAYLIST;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.ADD_MID_COPYONWRITEARRAYLIST;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.ADD_MID_LINKEDLIST;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.REMOVE_MID_ARRAYLIST;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.REMOVE_MID_COPYONWRITEARRAYLIST;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.REMOVE_MID_LINKEDLIST;
+import static com.example.multithreadingtestapp.screen.main.MainPresenter.*;
 import static com.example.multithreadingtestapp.screen.main.MainPresenter.ResultType;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.SEARCH_ARRAYLIST;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.SEARCH_COPYONWRITEARRAYLIST;
-import static com.example.multithreadingtestapp.screen.main.MainPresenter.SEARCH_LINKEDLIST;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
